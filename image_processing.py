@@ -110,7 +110,7 @@ def process_image(test_img, template_img):
     loctime = (e6 - e5)/cv.getTickFrequency()
     #print('Localization time:', loctime, 'seconds')
 
-    #return opening3
+    return opening3
 
     # detect edges using canny
     edges = cv.Canny(image=opening3, threshold1=30, threshold2=200)
