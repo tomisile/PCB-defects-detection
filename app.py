@@ -1,7 +1,11 @@
+from io import StringIO
 import streamlit as st
 import pickle
 from PIL import Image
 import warnings
+import time
+import cv2 as cv
+from image_processing import process_image
 
 warnings.filterwarnings('ignore')
 
@@ -39,7 +43,7 @@ def main():
         image1 = Image.open("sample_image.jpg")
         st.image(image1, caption='Sample: defective PCB with open circuit')
 
-    template_options = ["templates/01.jpg", "templates/04.jpg", "templates/05.jpg",
+    template_options = ["templates/01.jpg", "templates/bw1.jpg", "templates/04.jpg", "templates/05.jpg",
                         "templates/06.jpg", "templates/07.jpg", "templates/08.jpg",
                         "templates/09.jpg", "templates/10.jpg", "templates/11.jpg", "templates/12.jpg"]
     
@@ -48,20 +52,27 @@ def main():
     with tab1:
         # select template
         option = st.selectbox('Choose from 10 different templates',
-            options=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+            options=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
         )
         selection = template_options[option-1]
         disp_selection = Image.open(selection)
         st.image(disp_selection, caption="Selected Template", width=500)        
 
     with tab2:
-        uploaded_file = st.file_uploader("Send us a PCB image that matches the template you selected", accept_multiple_files=False)
+        uploaded_file = st.file_uploader("Send us a PCB image that matches the template you selected",
+                                        type=['png', 'jpg'], accept_multiple_files=False)
         if uploaded_file is not None:
             st.image(uploaded_file, caption='test image', width=500)
 
             # on_click of predict button
             if st.button('View difference'):
-                st.image(image1, caption=None)
+                with st.spinner('Wait for a few seconds...'):
+                    time.sleep(2)
+                # run image processing pipeline
+                st.image(process_image(test_img=uploaded_file, template_img=selection),
+                        caption=None, width=500
+                )
+                st.success('Finished morphological transformations')
     
     with tab3:
         st.write("Draws bounding box around defects")
