@@ -29,10 +29,22 @@ def main():
     """ this function defines the webpage """
 
     # side-bar
-    st.sidebar.markdown(' # How it works \n **PCB fabrication process** often suffers from defects, '
-                        'such as _missing holes, spur, spurious coopper, short, open circuit and mouse bites_ '
-                        '\nThese defects, if not detected before electronic components are fabricated onto the board, '
-                        'poses serious dangers to the components and its use')
+    with st.sidebar:
+        st.markdown('# How it works \n **PCB fabrication process** often suffers from defects, '
+                        'such as \n - missing holes ')
+        st.image('missing_hole.jpg', caption=None, width=150)
+        st.markdown('\n - spur')
+        st.image('spur.jpg', caption=None, width=150)
+        st.markdown('\n - spurious copper')
+        st.image('spurious_copper.jpg', caption=None, width=150)
+        st.markdown('\n - short')
+        st.image('short.jpg', caption=None, width=150)
+        st.markdown('\n - open circuit')
+        st.image('open_circuit.jpg', caption=None, width=150)
+        st.markdown('\n - mouse bites')
+        st.image('mouse_bite.jpg', caption=None, width=150)
+        st.markdown('\n These defects, if not detected before electronic components are fabricated onto the board, '
+                    'poses serious dangers to the components and its use')
     
     # Main page
     st.title('PCB Defects Detection')
