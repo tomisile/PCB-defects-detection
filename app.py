@@ -43,7 +43,7 @@ def main():
         image1 = Image.open("sample_image.jpg")
         st.image(image1, caption='Sample: defective PCB with open circuit')
 
-    template_options = ["templates/01.jpg", "templates/bw1.jpg", "templates/04.jpg", "templates/05.jpg",
+    template_options = ["templates/01.jpg", "templates/04.jpg", "templates/05.jpg",
                         "templates/06.jpg", "templates/07.jpg", "templates/08.jpg",
                         "templates/09.jpg", "templates/10.jpg", "templates/11.jpg", "templates/12.jpg"]
     
@@ -60,7 +60,7 @@ def main():
 
         if template_source == 'Use a pre-loaded template':
             option = st.selectbox('Choose from 10 different templates',
-                options=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+                options=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
             )
             selection = template_options[option-1]
             disp_selection = Image.open(selection)
