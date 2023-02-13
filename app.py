@@ -47,32 +47,60 @@ def main():
                         "templates/06.jpg", "templates/07.jpg", "templates/08.jpg",
                         "templates/09.jpg", "templates/10.jpg", "templates/11.jpg", "templates/12.jpg"]
     
+    test_options = ["test/01_missing_hole.jpg", "test/01_mouse_bite.jpg", "test/04_spurious_copper.jpg",
+                    "test/05_spur.jpg", "test/08_short.jpg", "test/09_mouse_bite.jpg",
+                    "test/10_mouse_bite.jpg", "test/11_short.jpg", "test/12_short.jpg",]
+    
     tab1, tab2, tab3 = st.tabs(["Select Template", "Upload Query", "Detect Defect"])
     
     with tab1:
         # select template
-        option = st.selectbox('Choose from 10 different templates',
-            options=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
-        )
-        selection = template_options[option-1]
-        disp_selection = Image.open(selection)
-        st.image(disp_selection, caption="Selected Template", width=500)        
+        template_source = st.radio("Choose template source",
+                        ('Use a pre-loaded template', 'Upload a custom template'))
+
+        if template_source == 'Use a pre-loaded template':
+            option = st.selectbox('Choose from 10 different templates',
+                options=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+            )
+            selection = template_options[option-1]
+            disp_selection = Image.open(selection)
+            st.image(disp_selection, caption="Selected Template", width=500)
+        
+        else:
+            selection = st.file_uploader("Upload your custom template image",
+                                        type=['png', 'jpg'], accept_multiple_files=False)
+            if selection is not None:
+                st.image(selection, caption='template image', width=500)        
 
     with tab2:
-        uploaded_file = st.file_uploader("Send us a PCB image that matches the template you selected",
-                                        type=['png', 'jpg'], accept_multiple_files=False)
-        if uploaded_file is not None:
-            st.image(uploaded_file, caption='test image', width=500)
+        # select test
+        test_source = st.radio("Choose test source",
+                            ('Use a pre-loaded test image', 'Upload a custom test image'))
 
-            # on_click of predict button
-            if st.button('View difference'):
-                with st.spinner('Wait for a few seconds...'):
-                    time.sleep(2)
-                # run image processing pipeline
-                st.image(process_image(test_img=uploaded_file, template_img=selection),
-                        caption=None, width=500
-                )
-                st.success('Finished morphological transformations')
+        if test_source == 'Use a pre-loaded test image':
+            test_option = st.selectbox('Choose from 9 different test samples',
+                options=(1, 2, 3, 4, 5, 6, 7, 8, 9)
+            )
+            test_selection = test_options[test_option-1]
+            disp_test_selection = Image.open(test_selection)
+            st.image(disp_test_selection, caption="Selected Test Image", width=500)
+        
+        else:
+            test_selection = st.file_uploader("Send us a PCB image that matches the template you selected",
+                                            type=['png', 'jpg'], accept_multiple_files=False)
+            
+            if test_selection is not None:
+                st.image(test_selection, caption='test image', width=500)
+
+        # on_click of predict button
+        if st.button('View difference'):
+            with st.spinner('Wait for a few seconds...'):
+                time.sleep(2)
+            # run image processing pipeline
+            st.image(process_image(test_img=test_selection, template_img=selection),
+                    caption=None, width=500
+            )
+            st.success('Finished morphological transformations')
     
     with tab3:
         st.write("Draws bounding box around defects")
