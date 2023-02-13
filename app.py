@@ -1,10 +1,10 @@
-from io import StringIO
+#from io import StringIO
 import streamlit as st
-import pickle
+#import pickle
 from PIL import Image
 import warnings
 import time
-import cv2 as cv
+#import cv2 as cv
 from image_processing import process_image
 
 warnings.filterwarnings('ignore')
