@@ -6,11 +6,17 @@ import imutils
 
 def process_image(test_img, template_img):
     
-    # Convert the file to an opencv image.
-    file_bytes = np.asarray(bytearray(test_img.read()), dtype=np.uint8)
-    test = cv.imdecode(file_bytes, 1) # queryImage
-    #test = cv.imread(test_img) # queryImage
-    template = cv.imread(template_img) # Reference Image
+    try:
+        test = cv.imread(test_img) # queryImage
+    except (TypeError):
+        # Convert the file to an opencv image.
+        file_bytes = np.asarray(bytearray(test_img.read()), dtype=np.uint8)
+        test = cv.imdecode(file_bytes, 1) # queryImage
+    try:
+        template = cv.imread(template_img) # Reference Image
+    except (TypeError):
+        file_bytes_2 = np.asarray(bytearray(template_img.read()), dtype=np.uint8)
+        template = cv.imdecode(file_bytes_2, 1) # Reference Image
 
     ''' REGISTRATION '''
     e1 = cv.getTickCount()
