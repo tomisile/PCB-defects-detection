@@ -55,13 +55,13 @@ def main():
         image1 = Image.open("sample_image.jpg")
         st.image(image1, caption='Sample: defective PCB with open circuit')
 
-    template_options = ["templates/01.jpg", "templates/04.jpg", "templates/05.jpg",
-                        "templates/06.jpg", "templates/07.jpg", "templates/08.jpg",
-                        "templates/09.jpg", "templates/10.jpg", "templates/11.jpg", "templates/12.jpg"]
+    template_options = ["01.jpg", "04.jpg", "05.jpg",
+                        "06.jpg", "07.jpg", "08.jpg",
+                        "09.jpg", "10.jpg", "11.jpg", "12.jpg"]
     
-    test_options = ["test/01_missing_hole.jpg", "test/01_mouse_bite.jpg", "test/04_spurious_copper.jpg",
-                    "test/05_spur.jpg", "test/08_short.jpg", "test/09_mouse_bite.jpg",
-                    "test/10_mouse_bite.jpg", "test/11_short.jpg", "test/12_short.jpg",]
+    test_options = ["01_missing_hole.jpg", "01_mouse_bite.jpg", "04_spurious_copper.jpg",
+                    "05_spur.jpg", "08_short.jpg", "09_mouse_bite.jpg",
+                    "10_mouse_bite.jpg", "11_short.jpg", "12_short.jpg"]
     
     tab1, tab2, tab3 = st.tabs(["Select Template", "Upload Query", "Detect Defect"])
     
