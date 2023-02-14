@@ -55,9 +55,9 @@ def main():
         image1 = Image.open("sample_image.jpg")
         st.image(image1, caption='Sample: defective PCB with open circuit')
 
-    template_options = ["01.jpg", "04.jpg", "05.jpg",
-                        "06.jpg", "07.jpg", "08.jpg",
-                        "09.jpg", "10.jpg", "11.jpg", "12.jpg"]
+    template_options = ["01.JPG", "04.JPG", "05.JPG",
+                        "06.JPG", "07.JPG", "08.JPG",
+                        "09.JPG", "10.JPG", "11.JPG", "12.JPG"]
     
     test_options = ["01_missing_hole.jpg", "01_mouse_bite.jpg", "04_spurious_copper.jpg",
                     "05_spur.jpg", "08_short.jpg", "09_mouse_bite.jpg",
