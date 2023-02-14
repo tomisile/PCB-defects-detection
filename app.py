@@ -5,7 +5,7 @@ from PIL import Image
 import warnings
 import time
 #import cv2 as cv
-from image_processing import process_image
+from image_processing import process_image, draw_bbox
 
 warnings.filterwarnings('ignore')
 
@@ -76,13 +76,13 @@ def main():
             )
             selection = template_options[option-1]
             disp_selection = Image.open(selection)
-            st.image(disp_selection, caption="Selected Template", width=500)
+            st.image(disp_selection, caption="Selected Template", width=700)
         
         else:
             selection = st.file_uploader("Upload your custom template image",
                                         type=['png', 'jpg'], accept_multiple_files=False)
             if selection is not None:
-                st.image(selection, caption='template image', width=500)        
+                st.image(selection, caption='template image', width=700)        
 
     with tab2:
         # select test
@@ -95,14 +95,14 @@ def main():
             )
             test_selection = test_options[test_option-1]
             disp_test_selection = Image.open(test_selection)
-            st.image(disp_test_selection, caption="Selected Test Image", width=500)
+            st.image(disp_test_selection, caption="Selected Test Image", width=700)
         
         else:
             test_selection = st.file_uploader("Send us a PCB image that matches the template you selected",
                                             type=['png', 'jpg'], accept_multiple_files=False)
             
             if test_selection is not None:
-                st.image(test_selection, caption='test image', width=500)
+                st.image(test_selection, caption='test image', width=700)
 
         # on_click of predict button
         if st.button('View difference'):
@@ -117,13 +117,23 @@ def main():
     with tab3:
         st.write("Draws bounding box around defects")
 
-        with open("sample_image.jpg", "rb") as file:
-            btn = st.download_button(
-                label="Download",
-                data=file,
-                file_name="sample_image.jpg",
-                mime="image/jpg"
+        # on_click of predict button
+        if st.button('Show defects'):
+            with st.spinner('Wait for a few seconds...'):
+                time.sleep(2)
+            # run bounding box pipeline
+            output = st.image(draw_bbox(test_img=test_selection, template_img=selection),
+                    caption=None, width=700
             )
+            st.success('Finished defects localisation')
+
+            with open("sample_image.jpg", "rb") as file:
+                btn = st.download_button(
+                    label="Download",
+                    data=file,
+                    file_name="sample_image.jpg",
+                    mime="image/jpg"
+                )
 
 
 # run webpage
